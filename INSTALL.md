@@ -32,8 +32,8 @@ Create new empty partition table > Yes
 
 Nyt luotuun FREE SPACE -alueeseen tehdään vain yksi partitio. Mene ko. 
 riville ja paina Enter > Create a new partition > paina Enter > Primary >
-Done setting up the partition > Finish partitioning and write changes to disk
-> No (ehdottaa paluuta osiovalikkoon) > Yes (kirjoitetaan muutokset levylle).
+Done setting up the partition > Finish partitioning and write changes to disk > 
+No (ehdottaa paluuta osiovalikkoon) > Yes (kirjoitetaan muutokset levylle).
 
 Nyt asennusohjelma kopioi tiedostot äsken luodulle USB-muistin levyosiolle.
 Tämä kestää jonkin aikaa riippuen USB-muistien nopeudesta.
@@ -49,59 +49,53 @@ ssh-palvelin pois asennettavien listalta.
 Nyt palvelin lähtee hakemaan asennettavia paketteja verkosta ja asentaa ne.
 Tämä kestää.
 
-Install the GRUB boot... > Yes (oletus)
+* Install the GRUB boot... > Yes (oletus)
 
 Valitse valikosta se levy, jolle teit osiot (esim. `/dev/sdc`).
 
-Installation complete > Continue
+* Installation complete > Continue
 
 Kun asennuskäyttöjärjestelmä on ajanut itsensä alas, irrota koneesta
 asennusmedian sisältävä USB-muisti. Nyt kone käynnistyy asennettuun Debianiin
 ja näet näytössä kirjautumiskehotteen.
 
-ktp-moodle login: `root`
+ktp-moodle login: `root`<br>
 Password: `moodle`
 
-root@ktp-moodle: ln -sf /dev/null /etc/udev/rules.d/75-persistent-net-generator.rules
+`root@ktp-moodle: ln -sf /dev/null /etc/udev/rules.d/75-persistent-net-generator.rules`
 
 Tämä estää eri koneiden verkkokorttien tallentumisen udev-ohjelman
 muistiin.
 
-root@ktp-moodle: apt-get install git
+`root@ktp-moodle: apt-get install git`
 
 Asentaa git-ohjelman, jolla kopioidaan palvelimelle muutetut tiedostot
 
-root@ktp-moodle: apt-get install dnsmasq
+`root@ktp-moodle: apt-get install dnsmasq`
 
 Asentaa dnsmasq-ohjelman, jota käytetään DHCP- ja DNS-palvelimena.
 
-root@ktp-moodle: git clone https://github.com/mplattu/DebianUSB.git
+`root@ktp-moodle: git clone https://github.com/mplattu/DebianUSB.git`
 
 Nyt kopioit Githubista ne tiedostot, jotka on kopioitava asennukseen.
 Voit tutkia tiedostoja DebianUSB-hakemistossa.
 
-root@ktp-moodle: cp -r DebianUSB/root/* /
+`root@ktp-moodle: cp -r DebianUSB/root/* /`
 
 Tämä kopioi kyseisessä hakemistossa olevat tiedostot levyjärjestelmään
 oikeille paikoilleen.
 
 Nyt perusasennus on valmis. Voit kokeilla asennusta seuraavasti:
-1. Rakenna LAN, jossa on tämä palvelin ja vähintään yksi kokelaan Abitti
--työasema.
-2. Käynnistä palvelin.
-3. Käynnistä kokelaan Abitti-työasema(t).
-4. Avaa kokelaan Abitti-työasemasta pääteikkuna (Applications Menu >
-System > Terminator).
-5. Anna komento `/sbin/ifconfig`. Jos verkkokortti `eth0` on saanut
-IP-osoitteen verkosta 10.10.1.* niin Abitti-työasema on saanut
-palvelimelta verkko-osoitteen.
-6. Anna komento `cat /etc/resolv.conf`. Jos tiedostossa on rivi
-`nameserver 10.10.0.1` on palvelin nimipalvelin.
-7. Anna komento `wget http://koe:443`. Jos ohjelma tuloste päättyy
-seuraavasti, toimii nimipalvelu oikein:
-`Connecting to koe (koe)|10.10.0.1|:443... failed: Connection refused`
-Epäonnistuminen johtuu siitä, että palvelimella ei vielä ole ko. porttia
-kuuntelelevaa palvelinta.
+
+1.  Rakenna LAN, jossa on tämä palvelin ja vähintään yksi kokelaan Abitti-työasema.
+2.  Käynnistä palvelin.
+3.  Käynnistä kokelaan Abitti-työasema(t).
+4.  Avaa kokelaan Abitti-työasemasta pääteikkuna (Applications Menu > System > Terminator).
+5.  Anna komento `/sbin/ifconfig`. Jos verkkokortti `eth0` on saanut IP-osoitteen verkosta 10.10.1.* niin Abitti-työasema on saanut palvelimelta verkko-osoitteen.
+6.  Anna komento `cat /etc/resolv.conf`. Jos tiedostossa on rivi `nameserver 10.10.0.1` on palvelin nimipalvelin.
+7.  Anna komento `wget http://koe:443`. Jos ohjelma tuloste päättyy seuraavasti, toimii nimipalvelu oikein:<br>
+`Connecting to koe (koe)|10.10.0.1|:443... failed: Connection refused`<br>
+Epäonnistuminen johtuu siitä, että palvelimella ei vielä ole ko. porttia kuuntelelevaa palvelinta.
 
 Tämän jälkeen voit asentaa haluamasi koejärjestelmän. Varmista, että se
 kuuntelee nimenomaan porttia 443.
